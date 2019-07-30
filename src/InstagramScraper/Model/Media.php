@@ -161,6 +161,11 @@ class Media extends AbstractModel
     protected $sidecarMedias = [];
 
     /**
+     * @var array
+     */
+    protected $userSponsors = [];
+
+    /**
      * @var string
      */
     protected $locationSlug;
@@ -438,6 +443,14 @@ class Media extends AbstractModel
     }
 
     /**
+     * @return array
+     */
+    public function getUserSponsors()
+    {
+        return $this->userSponsors;
+    }
+
+    /**
      * @return string
      */
     public function getLocationSlug()
@@ -623,6 +636,18 @@ class Media extends AbstractModel
                     }
 
                     $this->sidecarMedias[] = static::create($edge['node']);
+                }
+                break;
+            case 'edge_media_to_sponsor_user':
+                if (!is_array($arr[$prop]['edges'])) {
+                    break;
+                }
+                foreach ($arr[$prop]['edges'] as $edge) {
+                    if (!isset($edge['node'])) {
+                        continue;
+                    }
+
+                    $this->userSponsors[] = $edge['node']['sponsor'];
                 }
                 break;
             case 'owner':
