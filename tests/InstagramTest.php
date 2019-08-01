@@ -2,9 +2,9 @@
 
 namespace InstagramScraper\Tests;
 
+use InstagramScraper\CacheManager;
 use InstagramScraper\Instagram;
 use InstagramScraper\Model\Media;
-use phpFastCache\CacheManager;
 use PHPUnit\Framework\TestCase;
 
 class InstagramTest extends TestCase

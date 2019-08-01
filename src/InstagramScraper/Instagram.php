@@ -16,8 +16,6 @@ use InstagramScraper\Model\UserStories;
 use InstagramScraper\TwoStepVerification\ConsoleVerification;
 use InstagramScraper\TwoStepVerification\TwoStepVerificationInterface;
 use InvalidArgumentException;
-use phpFastCache\Cache\ExtendedCacheItemPoolInterface;
-use phpFastCache\CacheManager;
 use Unirest\Request;
 
 class Instagram
@@ -33,7 +31,7 @@ class Instagram
     const PAGING_DELAY_MINIMUM_MICROSEC = 1000000; // 1 sec min delay to simulate browser
     const PAGING_DELAY_MAXIMUM_MICROSEC = 3000000; // 3 sec max delay to simulate browser
 
-    /** @var ExtendedCacheItemPoolInterface $instanceCache */
+    /** @var CacheManager */
     private static $instanceCache;
 
     public $pagingTimeLimitSec = self::PAGING_TIME_LIMIT_SEC;
@@ -51,7 +49,6 @@ class Instagram
      * @param null $sessionFolder
      *
      * @return Instagram
-     * @throws \phpFastCache\Exceptions\phpFastCacheDriverCheckException
      */
     public static function withCredentials($username, $password, $sessionFolder = null)
     {
