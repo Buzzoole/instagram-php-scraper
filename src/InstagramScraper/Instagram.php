@@ -32,7 +32,7 @@ class Instagram
     const PAGING_DELAY_MAXIMUM_MICROSEC = 3000000; // 3 sec max delay to simulate browser
 
     /** @var CacheManager */
-    private static $instanceCache;
+    private static $instanceCache = null;
 
     public $pagingTimeLimitSec = self::PAGING_TIME_LIMIT_SEC;
     public $pagingDelayMinimumMicrosec = self::PAGING_DELAY_MINIMUM_MICROSEC;
@@ -60,7 +60,9 @@ class Instagram
                 'path' => $sessionFolder,
                 'ignoreSymfonyNotice' => true,
             ]);
-            static::$instanceCache = CacheManager::getInstance('files');
+            if (static::$instanceCache === null) {
+                static::$instanceCache = CacheManager::getInstance('files');
+            }
         } else {
             static::$instanceCache = $sessionFolder;
         }
